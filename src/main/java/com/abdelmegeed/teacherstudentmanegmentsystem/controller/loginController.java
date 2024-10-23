@@ -24,13 +24,13 @@ public class loginController {
         return "index";  // Renders index.html
     }
 
-    @PostMapping("/teacherHome")
+    @GetMapping("/teacherHome")
     public String redirectTeacherHome() {
 
         return "teacherHome";
     }
 
-    @PostMapping("/studentHome")
+    @GetMapping("/studentHome")
     public String redirectStudentHome() {
         return "studentHome";
     }
