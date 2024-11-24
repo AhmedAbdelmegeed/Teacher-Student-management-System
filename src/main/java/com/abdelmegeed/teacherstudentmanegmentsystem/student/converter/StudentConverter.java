@@ -24,7 +24,7 @@ public class StudentConverter {
                 .collect(Collectors.toSet());
 
         return StudentDTO.builder()
-                .id(student.getId())
+                .id(student.getStudent_id())
                 .user(userConverter.toDTO(student.getUser()))
                 .major(student.getMajor())
                 .courses(courseDTOs)
@@ -41,7 +41,7 @@ public class StudentConverter {
                 .collect(Collectors.toSet());
 
         return Student.builder()
-                .id(studentDTO.getId())
+                .student_id(studentDTO.getId())
                 .user(userConverter.toEntity(studentDTO.getUser()))
                 .major(studentDTO.getMajor())
                 .courses(courses)
