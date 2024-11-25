@@ -53,4 +53,16 @@ public class StudentUseCase {
                 .map(teacherConvertor::toDTO)
                 .collect(Collectors.toList());
     }
+
+    public StudentDTO addCourseToStudent(UUID studentId, UUID courseId) {
+        return studentConverter.toDTO(studentService.addCourseToStudent(studentId, courseId));
+    }
+
+    public void removeCourseFromStudent(UUID studentId, UUID courseId) {
+        studentService.removeCourseFromStudent(studentId, courseId);
+    }
+
+    public void removeAllCoursesFromStudent(UUID studentId) {
+        studentService.removeAllCoursesFromStudent(studentId);
+    }
 }

@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 public class RoleConverter {
     public RoleDTO toDTO(Role role) {
         return RoleDTO.builder()
-                .role_id(role.getRole_id())
+                .role_id(role.getRoleId())
                 .name(role.getName())
                 .build();
     }
 
     public Role toEntity(RoleDTO roleDTO) {
         return Role.builder()
-                .role_id(roleDTO.getRole_id())
+                .roleId(roleDTO.getRole_id())
                 .name(roleDTO.getName())
                 .build();
 

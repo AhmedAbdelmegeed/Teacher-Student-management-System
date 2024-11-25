@@ -5,7 +5,7 @@ import com.abdelmegeed.teacherstudentmanegmentsystem.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID student_id;
+    private UUID studentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -26,7 +26,7 @@ public class Student {
 
     @Column(nullable = false)
     private String major;
-    @ManyToMany(mappedBy = "student")
-    private Set<Course> courses;
+    @ManyToMany(mappedBy = "students")
+    private List<Course> courses;
 
 }

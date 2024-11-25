@@ -3,7 +3,7 @@ package com.abdelmegeed.teacherstudentmanegmentsystem.user.model.DTO;
 import com.abdelmegeed.teacherstudentmanegmentsystem.role.model.DTO.RoleDTO;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 @Builder
 @Getter
@@ -16,5 +16,5 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private Set<RoleDTO> RolesDTO;
+    private List<RoleDTO> RolesDTO;
 }

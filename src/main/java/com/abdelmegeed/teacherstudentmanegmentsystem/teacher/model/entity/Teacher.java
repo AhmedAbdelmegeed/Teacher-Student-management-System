@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID teacher_id;
+    private UUID teacherId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -29,5 +29,5 @@ public class Teacher {
     private LocalDate hireDate;
 
     @ManyToMany(mappedBy = "teachers")
-    private Set<Course> courses;
+    private List<Course> courses;
 }

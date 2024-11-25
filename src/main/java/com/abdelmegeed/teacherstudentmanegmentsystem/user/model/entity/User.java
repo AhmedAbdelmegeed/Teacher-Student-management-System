@@ -4,8 +4,8 @@ import com.abdelmegeed.teacherstudentmanegmentsystem.role.model.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
-import java.util.Set;
 
 @Entity
 @Builder
@@ -17,7 +17,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID user_id;
+    private UUID userId;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -40,5 +40,5 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> Roles;
+    private List<Role> Roles;
 }

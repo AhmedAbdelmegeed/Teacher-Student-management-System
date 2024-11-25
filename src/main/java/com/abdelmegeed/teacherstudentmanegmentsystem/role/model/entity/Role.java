@@ -16,7 +16,7 @@ public class Role {
 
     @Id
     @GeneratedValue
-    private UUID role_id;
+    private UUID roleId;
 
     @Column(nullable = false, unique = true)
     private String name;

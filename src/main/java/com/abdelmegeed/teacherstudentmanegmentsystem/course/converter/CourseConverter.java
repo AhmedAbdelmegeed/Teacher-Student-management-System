@@ -2,51 +2,67 @@ package com.abdelmegeed.teacherstudentmanegmentsystem.course.converter;
 
 import com.abdelmegeed.teacherstudentmanegmentsystem.course.model.DTO.CourseDTO;
 import com.abdelmegeed.teacherstudentmanegmentsystem.course.model.entity.Course;
-import com.abdelmegeed.teacherstudentmanegmentsystem.teacher.converter.TeacherConverter;
-import com.abdelmegeed.teacherstudentmanegmentsystem.student.converter.StudentConverter;
-
+import com.abdelmegeed.teacherstudentmanegmentsystem.student.repo.StudentRepository;
+import com.abdelmegeed.teacherstudentmanegmentsystem.teacher.repo.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class CourseConverter {
-    private final TeacherConverter teacherConverter;
-    private final StudentConverter studentConverter;
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
 
     public CourseDTO toDTO(Course course) {
+        List<String> students = course.getStudents()
+                .stream()
+                .map(student -> student.getUser().getUsername())
+                .toList();
+        List<String> teachers = course.getTeachers()
+                .stream()
+                .map(teacher -> teacher.getUser().getUsername())
+                .toList();
         return CourseDTO.builder()
-                .course_id(course.getCourse_id())
+                .course_id(course.getCourseId())
                 .name(course.getName())
                 .description(course.getDescription())
                 .credits(course.getCredits())
                 .courseUrl(course.getCourseUrl())
                 .duration(course.getDuration())
-                .teachers(course.getTeachers().stream()
-                        .map(teacherConverter::toDTO)
-                        .collect(Collectors.toSet()))
-                .students(course.getStudents().stream()
-                        .map(studentConverter::toDTO)
-                        .collect(Collectors.toSet()))
+                .teachers(teachers)
+                .students(students)
                 .build();
     }
 
     public Course toEntity(CourseDTO courseDTO) {
+
         return Course.builder()
-                .course_id(courseDTO.getCourse_id())
+                .courseId(courseDTO.getCourse_id())
                 .name(courseDTO.getName())
                 .description(courseDTO.getDescription())
                 .credits(courseDTO.getCredits())
                 .courseUrl(courseDTO.getCourseUrl())
                 .duration(courseDTO.getDuration())
-                .teachers(courseDTO.getTeachers().stream()
-                        .map(teacherConverter::toEntity)
-                        .collect(Collectors.toSet()))
-                .students(courseDTO.getStudents().stream()
-                        .map(studentConverter::toEntity)
-                        .collect(Collectors.toSet()))
+                .teachers(Optional.ofNullable(courseDTO.getTeachers())
+                        .orElseGet(Collections::emptyList)
+                        .stream()
+                        .filter(Objects::nonNull)
+                        .map(userName -> teacherRepository.findByUser_Username(userName).orElse(null))
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList()))
+                .students(Optional.ofNullable(courseDTO.getTeachers())
+                        .orElseGet(Collections::emptyList)
+                        .stream()
+                        .filter(Objects::nonNull)
+                        .map(userName -> studentRepository.findByUser_Username(userName).orElse(null))
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList()))
                 .build();
     }
 }

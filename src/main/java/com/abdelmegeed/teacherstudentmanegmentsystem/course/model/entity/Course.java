@@ -5,7 +5,7 @@ import com.abdelmegeed.teacherstudentmanegmentsystem.teacher.model.entity.Teache
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID course_id;
+    private UUID courseId;
 
     @Column(nullable = false)
     private String name;
@@ -40,7 +40,7 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id")
     )
-    private Set<Teacher> teachers;
+    private List<Teacher> teachers;
 
     @ManyToMany
     @JoinTable(
@@ -48,5 +48,5 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private Set<Student> students;
+    private List<Student> students;
 }

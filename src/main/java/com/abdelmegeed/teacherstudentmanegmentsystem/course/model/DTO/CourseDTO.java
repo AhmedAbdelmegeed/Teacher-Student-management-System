@@ -1,10 +1,8 @@
 package com.abdelmegeed.teacherstudentmanegmentsystem.course.model.DTO;
 
-import com.abdelmegeed.teacherstudentmanegmentsystem.student.model.DTO.StudentDTO;
-import com.abdelmegeed.teacherstudentmanegmentsystem.teacher.model.DTO.TeacherDTO;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -19,6 +17,6 @@ public class CourseDTO {
     private int credits;
     private String courseUrl;
     private int duration;
-    private Set<TeacherDTO> teachers;
-    private Set<StudentDTO> students;
+    private List<String> teachers;
+    private List<String> students;
 }

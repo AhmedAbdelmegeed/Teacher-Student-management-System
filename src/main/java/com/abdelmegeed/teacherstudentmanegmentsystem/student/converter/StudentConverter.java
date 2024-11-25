@@ -9,7 +9,7 @@ import com.abdelmegeed.teacherstudentmanegmentsystem.user.converter.UserConverte
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,12 +19,12 @@ public class StudentConverter {
     private final CourseConverter courseConverter;
     public StudentDTO toDTO(Student student) {
 
-        Set<CourseDTO> courseDTOs = student.getCourses().stream()
+        List<CourseDTO> courseDTOs = student.getCourses().stream()
                 .map(courseConverter::toDTO)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         return StudentDTO.builder()
-                .id(student.getStudent_id())
+                .id(student.getStudentId())
                 .user(userConverter.toDTO(student.getUser()))
                 .major(student.getMajor())
                 .courses(courseDTOs)
@@ -36,12 +36,12 @@ public class StudentConverter {
             return null;
         }
 
-        Set<Course> courses = studentDTO.getCourses().stream()
+        List<Course> courses = studentDTO.getCourses().stream()
                 .map(courseConverter::toEntity)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         return Student.builder()
-                .student_id(studentDTO.getId())
+                .studentId(studentDTO.getId())
                 .user(userConverter.toEntity(studentDTO.getUser()))
                 .major(studentDTO.getMajor())
                 .courses(courses)

@@ -9,7 +9,7 @@ import com.abdelmegeed.teacherstudentmanegmentsystem.user.converter.UserConverte
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -18,12 +18,12 @@ public class TeacherConverter {
     private final UserConverter userConverter;
     private final CourseConverter courseConverter;
     public TeacherDTO toDTO(Teacher teacher) {
-        Set<CourseDTO> courseDTOs = teacher.getCourses().stream()
-                .map(courseConverter::toDTO) // Convert each Course entity to CourseDTO
-                .collect(Collectors.toSet());
+        List<CourseDTO> courseDTOs = teacher.getCourses().stream()
+                .map(courseConverter::toDTO)
+                .collect(Collectors.toList());
 
         return TeacherDTO.builder()
-                .teacher_id(teacher.getTeacher_id())
+                .teacher_id(teacher.getTeacherId())
                 .userDTO(userConverter.toDTO(teacher.getUser()))
                 .hireDate(teacher.getHireDate())
                 .courses(courseDTOs)
@@ -32,15 +32,16 @@ public class TeacherConverter {
 
     public Teacher toEntity(TeacherDTO teacherDTO) {
 
-        Set<Course> courses = teacherDTO.getCourses().stream()
+        List<Course> courses = teacherDTO.getCourses().stream()
                 .map(courseConverter::toEntity)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         return Teacher.builder()
-                .teacher_id(teacherDTO.getTeacher_id())
+                .teacherId(teacherDTO.getTeacher_id())
                 .user(userConverter.toEntity(teacherDTO.getUserDTO()))
                 .hireDate(teacherDTO.getHireDate())
                 .courses(courses)
                 .build();
     }
+
 }

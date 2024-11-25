@@ -1,3 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE course
 (
     course_id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

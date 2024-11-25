@@ -5,7 +5,7 @@ import com.abdelmegeed.teacherstudentmanegmentsystem.user.model.DTO.UserDTO;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -17,5 +17,5 @@ public class TeacherDTO {
     private UUID teacher_id;
     private UserDTO userDTO;
     private LocalDate hireDate;
-    private Set<CourseDTO> courses;
+    private List<CourseDTO> courses;
 }

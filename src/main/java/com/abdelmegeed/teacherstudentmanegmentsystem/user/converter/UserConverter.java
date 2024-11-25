@@ -8,7 +8,7 @@ import com.abdelmegeed.teacherstudentmanegmentsystem.user.model.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,12 +17,12 @@ public class UserConverter {
     private final RoleConverter roleConverter;
     public UserDTO toDTO(User user) {
 
-        Set<RoleDTO> rolesDTOs = user.getRoles().stream()
+        List<RoleDTO> rolesDTOs = user.getRoles().stream()
                 .map(roleConverter::toDTO)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         return UserDTO.builder()
-                .user_id(user.getUser_id())
+                .user_id(user.getUserId())
                 .username(user.getUsername())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
@@ -32,12 +32,12 @@ public class UserConverter {
     }
 
     public User toEntity(UserDTO userDTO) {
-        Set<Role> roles = userDTO.getRolesDTO().stream()
+        List<Role> roles = userDTO.getRolesDTO().stream()
                 .map(roleConverter::toEntity)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         return User.builder()
-                .user_id(userDTO.getUser_id())
+                .userId(userDTO.getUser_id())
                 .username(userDTO.getUsername())
                 .firstName(userDTO.getFirstName())
                 .lastName(userDTO.getLastName())

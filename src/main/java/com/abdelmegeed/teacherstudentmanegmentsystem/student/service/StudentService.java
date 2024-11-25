@@ -1,7 +1,7 @@
 package com.abdelmegeed.teacherstudentmanegmentsystem.student.service;
 
 import com.abdelmegeed.teacherstudentmanegmentsystem.course.model.entity.Course;
-import com.abdelmegeed.teacherstudentmanegmentsystem.course.service.CourseService;
+import com.abdelmegeed.teacherstudentmanegmentsystem.course.repo.CourseRepository;
 import com.abdelmegeed.teacherstudentmanegmentsystem.student.model.entity.Student;
 import com.abdelmegeed.teacherstudentmanegmentsystem.student.repo.StudentRepository;
 import com.abdelmegeed.teacherstudentmanegmentsystem.teacher.model.entity.Teacher;
@@ -15,7 +15,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
-    private final CourseService courseService;
+    private final CourseRepository courseRepository;
 
     public Student getStudentById(UUID student_id) {
         return studentRepository.findById(student_id).orElseThrow(() -> new RuntimeException("Student not found"));
@@ -58,8 +58,8 @@ public class StudentService {
         for (Course course : StudentCourses) {
             List<Teacher> CourseTeachers = course.getTeachers().stream().toList();
             for (Teacher teacher : CourseTeachers) {
-                if (!TeacherIds.contains(teacher.getTeacher_id())) {
-                    TeacherIds.add(teacher.getTeacher_id());
+                if (!TeacherIds.contains(teacher.getTeacherId())) {
+                    TeacherIds.add(teacher.getTeacherId());
                     StudentTeachers.add(teacher);
                 }
             }
@@ -67,19 +67,21 @@ public class StudentService {
         return StudentTeachers;
     }
 
-    public void addCourseToStudent(UUID studentId, UUID courseId) {
+    public Student addCourseToStudent(UUID studentId, UUID courseId) {
         Student student = getStudentById(studentId);
-        Course course = courseService.getCourseById(courseId);
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
         student.getCourses().add(course);
-        studentRepository.save(student);
+        return studentRepository.save(student);
     }
+
     @Transactional
     public void removeCourseFromStudent(UUID studentId, UUID courseId) {
         Student student = getStudentById(studentId);
-        Course course = courseService.getCourseById(courseId);
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
         student.getCourses().remove(course);
         studentRepository.save(student);
     }
+
     @Transactional
     public void removeAllCoursesFromStudent(UUID studentId) {
         Student student = getStudentById(studentId);
