@@ -16,9 +16,8 @@ The Teacher-Student Management System is a web application designed to facilitat
 ## Technologies Used
 
 - **Spring Boot**: Framework for building the backend.
-- **H2 Database**: In-memory database for data storage.
-- **Thymeleaf**: Template engine for rendering HTML.
-
+- **PostgressSQL Database**: In-memory database for data storage.
+- 
 ## Getting Started
 
 ### Prerequisites
