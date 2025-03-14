@@ -17,7 +17,7 @@ The Teacher-Student Management System is a web application designed to facilitat
 
 - **Spring Boot**: Framework for building the backend.
 - **PostgressSQL Database**: In-memory database for data storage.
-- 
+  
 ## Getting Started
 
 ### Prerequisites
